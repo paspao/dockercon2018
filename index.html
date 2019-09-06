@@ -1,0 +1,1141 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <title>DockerCon 2018 Barcellona</title>
+      <link rel="stylesheet" href="css/reveal.css">
+      <link rel="stylesheet" href="css/monokai.css">
+      <link rel="stylesheet" href="css/asciinema-player.css">
+      <link rel="stylesheet" href="css/theme/simple.css">
+      <!-- Theme used for syntax highlighting of code -->
+      <link rel="stylesheet" href="lib/css/zenburn.css">
+      <!-- Printing and PDF exports -->
+      <script>
+         var link = document.createElement( 'link' );
+         link.rel = 'stylesheet';
+         link.type = 'text/css';
+         link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+         document.getElementsByTagName( 'head' )[0].appendChild( link );
+      </script>
+      <style type="text/css">
+         .row {
+         width: 100% !important;
+         height: auto !important;
+         vertical-align: top;
+         /*margin: 0 auto;*/
+         }
+         .block {
+         width: 600px;
+         height: 100%;
+         margin-top: 0px;
+         vertical-align: top !important;
+         display: inline-block;
+         }
+         .wordwrap { 
+         white-space: pre-wrap;      /* CSS3 */   
+         white-space: -moz-pre-wrap; /* Firefox */    
+         white-space: -pre-wrap;     /* Opera <7 */   
+         white-space: -o-pre-wrap;   /* Opera 7 */    
+         word-wrap: break-word;      /* IE */
+         }
+      </style>
+      <!-- https://www.infoq.com/news/2018/12/dockercon-eu-2018-->
+   </head>
+   <body>
+      <div class="reveal">
+         <div class="slides">
+            <section>
+               <section >
+                  <div data-block-type="text" >
+                     <div data-placeholder-text="Text" >
+                        <img style="border: 0px;" alt="Down arrow" data-lazy-loaded="" data-src="img/dockercon.png">
+                     </div>
+                  </div>
+               </section>
+               <section data-background-image="img/calendar.jpeg" data-background-opacity="0.2">
+                  <div class="row" data-block-type="text"  >
+                     <div class="block" data-placeholder-tag="p" data-placeholder-text="Text" data-has-custom-html="">
+                        <h3>3 dicembre</h3>
+                        <p><span style="font-size:0.5em;">252737 - Workshop: Container Storage Concepts and How to Use Them</span></p>
+                     </div>
+                  </div>
+                  <div class="row" style="position: absolute;" data-block-type="text"  data-block-id="438d0610a33e2800b39b90f16f62f746">
+                     <div class="block" data-placeholder-tag="p" data-placeholder-text="Text" data-has-custom-html="">
+                        <h3>4 dicembre</h3>
+                        <ul>
+                           <li><span style="font-size:0.5em;">256237 - General Session: Day 1</span></li>
+                           <li><span style="font-size:0.5em;">250590 - How To Build Your Containerization Strategy</span></li>
+                           <li><span style="font-size:0.5em;">237268 - Docker Containers and Databases</span></li>
+                           <li><span style="font-size:0.5em;">252738 - Workshop: Migrating Java Applications to Docker Containers</span></li>
+                           <li><span style="font-size:0.5em;">244187 - Building Infrastructure for the Next Generation of Successful African Ventures</span></li>
+                           <li><span style="font-size:0.5em;">244022 - App-in-a-Box with Docker Application Packages</span></li>
+                           <li><span style="font-size:0.5em;">262912 - Dockerfile Best Practices</span></li>
+                        </ul>
+                     </div>
+                     <div class="block" data-placeholder-tag="p" data-placeholder-text="Text" data-has-custom-html="">
+                        <h3>5 dicembre</h3>
+                        <ul>
+                           <li><span style="font-size:0.5em;">261219 - General Session: Day 2</span></li>
+                           <li><span style="font-size:0.5em;">250876 - Tips and Tricks of the Docker Captains</span></li>
+                           <li><span style="font-size:0.5em;">250870 - From Monolith to Microservices</span></li>
+                           <li><span style="font-size:0.5em;">252706 - Provisioning and Managing Storage for Docker Containers</span></li>
+                           <li><span style="font-size:0.5em;">251464 - Continuous Delivery with Docker Containers and Java: The Good, the Bad, and the Ugly</span></li>
+                        </ul>
+                     </div>
+                  </div>
+               </section>
+            </section>
+            <section data-background-image="img/diario.jpeg" data-background-opacity="0.2">
+               <h2>
+                  <p>Contents</p>
+               </h2>
+
+                     <ul>
+                        <li><span style="font-size:0.9em">DockerApp</span></li>
+                        <li style="text-align:justify"><span style="font-size:0.9em">BUILDKIT</span></li>
+                        <li style="text-align:justify"><span style="font-size:0.9em">Cnab.io</span></li>
+                        <li style="text-align:justify"><span style="font-size:0.9em">Multistage</span></li>
+                        <li style="text-align:justify"><span style="font-size:0.9em">Thin image</span></li>
+                        <li style="text-align:justify"><span style="font-size:0.9em">Dive</span></li>
+                        <li style="text-align:justify"><span style="font-size:0.9em">Security docker container</span></li>
+                        <li style="text-align:justify"><span style="font-size:0.9em">jdk params,memory,tips in a container JDK11</span></li>
+                        <li style="text-align:justify"><span style="font-size:0.9em">building maven security check, tree shake</span></li>
+                        <!--<li style="text-align:justify"><span style="font-size:0.9em">Clair scanner</span></li>-->
+                        <li style="text-align:justify"><span style="font-size:0.9em">New features: mount, cache, secret, ssh forwarding</span></li>
+                     </ul>
+               
+            </section>
+
+            <section data-background-image="img/Whale-Logo332@2x_5.png" data-background-size="initial" data-background-position="0% 0%" data-background-opacity="0.2" class="stack" >
+               <section >
+                  
+                     <h2>Thin image</h2>
+                     <pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM debian
+COPY . /app
+RUN apt-get update
+RUN apt-get -y install openjdk-8-jdk ssh emacs
+CMD ["java", "-jar", "/app/target/app.jar"]
+ </code></pre>
+               </section>
+<section >
+                  
+                     <h1>Thin image</h1>
+                     <pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM debian
+COPY . /app
+RUN apt-get update
+RUN apt-get -y install openjdk-8-jdk ssh <del style="color: red">emacs</del> <ins>vim</ins>
+CMD ["java", "-jar", "/app/target/app.jar"]
+ </code></pre>
+               </section>
+
+<section >
+                  
+                     <h1>Thin image</h1>
+                     <pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM debian
+<del style="color: red">COPY . /app</del>
+RUN apt-get update
+RUN apt-get -y install openjdk-8-jdk ssh vim
+<ins style="color: green">COPY . /app</ins>
+CMD ["java", "-jar", "/app/target/app.jar"]</code></pre>
+</section>
+<section >         <h1>Thin image</h1>
+                     <pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM debian
+RUN apt-get update
+RUN apt-get -y install openjdk-8-jdk ssh vim
+COPY . /app
+CMD ["java", "-jar", "/app/target/app.jar"]</code></pre>
+</section>
+<section >
+                     <h1>Thin image</h1>
+                     <pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM debian
+RUN apt-get update
+RUN apt-get -y install openjdk-8-jdk ssh vim
+<del style="color: red">COPY . /app</del>
+<ins style="color: green">COPY target/app.jar /app</ins>
+CMD ["java", "-jar", "/app<del style="color: red">/target</del>/app.jar"]</code></pre>
+
+<p class="fragment">COPY vs ADD
+</p>
+</section>
+
+<section >
+                     <h1>Thin image</h1>
+                     <pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM debian
+<del style="color: red">RUN apt-get update
+RUN apt-get -y install openjdk-8-jdk ssh vim</del>
+<ins style="color: green">RUN apt-get update && apt-get -y install \
+openjdk-8-jdk ssh vim</ins>
+COPY . /app
+COPY target/app.jar /app
+CMD ["java", "-jar", "/app/app.jar"]</code></pre>
+</section>
+
+
+<section >
+                     <h1>Thin image</h1>
+                     <pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM debian
+RUN apt-get update && apt-get -y install \
+openjdk-8-jdk ssh vim
+COPY . /app
+COPY target/app.jar /app
+CMD ["java", "-jar", "/app/app.jar"]</code></pre>
+</section>
+<section >
+                     <h1>Thin image</h1>
+                     <pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM debian
+RUN apt-get update && apt-get -y install \
+openjdk-8-jdk <del style="color: red">ssh vim</del>
+COPY . /app
+COPY target/app.jar /app
+CMD ["java", "-jar", "/app/app.jar"]</code></pre>
+</section>
+<section >
+                     <h1>Thin image</h1>
+                     <pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM debian
+RUN apt-get update && apt-get -y install \
+openjdk-8-jdk
+COPY . /app
+COPY target/app.jar /app
+CMD ["java", "-jar", "/app/app.jar"]</code></pre>
+</section>
+<section >
+                     <h1>Thin image</h1>
+                     <pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM debian
+RUN apt-get update && apt-get -y install <ins style="color: green">--no-install-recommends</ins>\
+openjdk-8-jdk
+COPY . /app
+COPY target/app.jar /app
+CMD ["java", "-jar", "/app/app.jar"]</code></pre>
+</section>
+<section >
+                     <h1>Thin image</h1>
+                     <pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM debian
+RUN apt-get update && apt-get -y install --no-install-recommends\
+openjdk-8-jdk <ins style="color: green">\
+&& rm -rf /var/lib/apt/lists/*</ins>
+COPY . /app
+COPY target/app.jar /app
+CMD ["java", "-jar", "/app/app.jar"]</code></pre>
+</section>
+
+<section >
+                     <h1>Thin image</h1>
+                     <pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM debian
+RUN apt-get update && apt-get -y install --no-install-recommends\
+openjdk-8-jdk \
+&& rm -rf /var/lib/apt/lists/*
+COPY . /app
+COPY target/app.jar /app
+CMD ["java", "-jar", "/app/app.jar"]</code></pre>
+</section>
+<section >
+                     <h1>Thin image</h1>
+                     <pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+<del style="color: red">FROM debian
+RUN apt-get update && \
+apt-get -y install --no-install-recommends \
+openjdk-8-jdk\
+&& rm -rf /var/lib/apt/lists/*</del>
+FROM openjdk
+COPY target/app.jar /app
+CMD ["java", "-jar", "/app/app.jar"]</code></pre>
+</section>
+<section >
+                     <h1>Thin image</h1>
+                     <pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM openjdk<ins class="fragment" style="color: green">:8</ins><ins class="fragment" style="color: green">-jre</ins><ins class="fragment" style="color: green">-slim</ins>
+COPY target/app.jar /app
+CMD ["java", "-jar", "/app/app.jar"]</code></pre>
+</section>
+<section >
+                     <h1>Thin image</h1>
+                     <pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM openjdk:8-jre<ins style="color: green">-alpine</ins>
+COPY target/app.jar /app
+CMD ["java", "-jar", "/app/app.jar"]</code></pre>
+</section>
+<section>
+	<h1>Thin image</h1>
+	<table>
+		<thead>
+			<tr><th>REPOSITORY</th><th>TAG</th><th>SIZE</th></tr>
+		</thead>
+		<tbody>
+			<tr><td>openjdk</td><td>8</td><td>624MB</td></tr>
+			<tr><td>openjdk</td><td>8-jre</td><td>443MB</td></tr>
+			<tr><td>openjdk</td><td>8-jre-slim</td><td>204MB</td></tr>
+			<tr><td>openjdk</td><td>8-jre-alpine</td><td>83MB</td></tr>
+		</tbody>
+	</table>
+</section>
+<section>
+	<h2>Build from source in a consistent environment...Why?</h2>
+	<ul>
+		<li class="fragment">Build environment is described in the Dockerfile</li>
+		<li class="fragment">Correct versions of build tools installed</li>
+		<li class="fragment">Prevent inconsistencies between environments</li>
+		<li class="fragment">There may be system dependencies</li>
+		<li class="fragment">The <i>"source of truth"</i> is the source code not the build artifact</li>
+	</ul>
+</section>
+<section>
+	<h2>Build from source</h2>
+<pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM maven:3.6-jdk-8-alpine
+COPY pom.xml /app/
+COPY src /app/src
+RUN cd /app && mvn -e -B package
+CMD ["java", "-jar", "/app/app.jar"]
+</code></pre>
+</section>
+
+<section>
+<h2>Build from source</h2>
+<pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM maven:3.6-jdk-8-alpine
+<ins style="color: green">WORKDIR /app</ins>
+COPY pom.xml <del style="color: red">/app/</del><ins style="color: green">.</ins>
+COPY src <del style="color: red">/app</del><ins style="color: green">.</ins>/src
+RUN <del style="color: red">cd /app &&</del>mvn -e -B package
+CMD ["java", "-jar", "/app/app.jar"]
+</code></pre>
+</section>
+
+<section>
+<h2>Build from source</h2>
+<pre ><code   style="background-color: black !important; font-size: 28px; height: 100% !important; max-height: unset;" data-trim data-noescape>
+FROM maven:3.6-jdk-8-alpine
+WORKDIR /app
+COPY pom.xml .
+<ins style="color: green">RUN mvn -e -B dependency:resolve</ins>
+COPY src ./src
+RUN mvn -e -B package
+CMD ["java", "-jar", "/app/app.jar"]
+</code></pre>
+</section>
+
+
+
+
+               <section>
+                  <h2>Stability: Docker and Java</h2>
+                  <ul>
+                  <li>Watch for JVM cgroup/taskset awareness (with JDK <= 8u131)</li>
+                  <ul>
+<li>getAvailableProcessors() may incorrectly report the number of cpus in Docker (JDK-8140793)</li>
+<li>Runtime.availableProcessors() ignores Linux taskset command (JDK-6515172)</li>
+<li>GC threads, default fork/join thread pool sizes (and others) is based from host CPU count</li>
+</ul>
+<li>Set container memory appropriately</li>
+<ul>
+<li>JVM requirements = Heap size (Xmx) + Metaspace + JVM overhead</li>
+<li>Account for native thread requirements e.g. thread stack size (Xss)</li>
+</ul>
+
+<li>Entropy</li>
+<ul>
+<li>Host entropy can soon be exhausted by crypto operations and /dev/random blocks</li>
+<li>-Djava.security.egd=file:/dev/./urandom (<a href="https://www.2uo.de/myths-about-urandom/">https://www.2uo.de/myths-about-urandom/</a>) (JDK-6202721)</li>
+</ul>
+</ul>
+               </section>
+               <section>
+               	<h2>Since JDK8 this has been improving with every release</h2>
+               	<ul>               		
+               		<li><b>JDK-8170888</b> Use cgroup memory limit when determining heap size JDK 8,9</li>
+					<li><b>JDK-8146115</b> Improve container detection and resource configuration usage JDK 10</li>
+					<li><b>JDK-8179498</b> attach in linux should be relative to /proc/pid/root and namespace aware</li> 
+					<li><b>JDK-8186248</b> Allow more flexibility in selecting Heap % of available RAM JDK 10</li>
+					<li><b>JDK-8193710</b> jcmd -l and jps commands do not list JVMs in Docker containers JDK 11</li>
+					<li><b>JDK-8203357</b> Container Metrics JDK 11</li>
+               	</ul>
+               </section>
+            </section>
+            
+            <section>
+               <section data-background-image="img/stage.jpeg">
+                  <h1>MultiStage</h1>
+                  <div class="sl-block" data-block-type="text" >
+                     <div class="sl-block-content fragment" data-placeholder-tag="p" data-placeholder-text="Text"  data-fragment-index="0">
+                        <p><strong>From Docker 17.05</strong></p>
+                     </div>
+                  </div>
+                  <div class="sl-block" data-block-type="text"  >
+                     <div class="sl-block-content fragment" data-placeholder-tag="p" data-placeholder-text="Text" data-fragment-index="1">
+                        <p><strong><span style="text-align:start">Keep the image size down</span></strong></p>
+                     </div>
+                  </div>
+                  <div class="sl-block" data-block-type="text" >
+                     <div class="sl-block-content fragment" data-placeholder-tag="p" data-placeholder-text="Text"  data-fragment-index="2">
+                        <p><strong>Dockerfile.build vs Dockerfile</strong></p>
+                     </div>
+                  </div>
+               </section>
+               <section data-background-image="img/stage.jpeg">
+                  <!--data-background-size="initial" data-background-position="0% 0%" data-background-opacity="0.5" data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/1021456/images/5966536/Whale-Logo332_2x_5.png"-->
+                  <div class="sl-block" data-block-type="code" >
+                     <div class="sl-block-content notranslate fragment" data-highlight-theme="monokai" data-fragment-index="1">
+                        <p>Dockerfile.build</p>
+                        <pre><code style="background-color: black !important;" data-trim data-noescape>FROM maven:3.6.0-jdk-11-slim
+WORKDIR /root
+COPY settings.xml /root/.m2/
+COPY ./* ./
+RUN mvn -e -B  package</code></pre>
+                     </div>
+                  </div>
+                  <div class="sl-block" data-block-type="code" >
+                     <div class="sl-block-content notranslate fragment" data-highlight-theme="monokai"  data-fragment-index="3">
+                        <p>Dockerfile</p>
+                        <pre><code style="background-color: black !important; font-size: 20px;" data-trim data-noescape >FROM openjdk:8-jre-alpine
+COPY ./df-api-gateway-0.0.1-SNAPSHOT.jar /usr/src/apigateway/
+WORKDIR /usr/src/apigateway
+EXPOSE 8080
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=8080", "-jar", "df-api-gateway-0.0.1-SNAPSHOT.jar"]</code></pre>
+                     </div>
+                  </div>
+                  <div class="sl-block" data-block-type="code" >
+                     <div class="sl-block-content notranslate fragment" data-highlight-theme="monokai" data-fragment-index="5">
+                        <p>build.sh</p>
+                        <pre><code style="background-color: black !important; font-size: 24px;" data-trim data-noescape>#!/bin/sh
+echo Building digitalfasteningBuild
+docker build --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy \  
+    -t digitalfastening/df-api-gateway:build . -f Dockerfile.build
+
+docker container create --name extract digitalfastening/df-api-gateway:build
+docker container cp extract:/root/df-api-gateway/target/df-api-gateway-0.0.1-SNAPSHOT.jar .
+docker container rm -f extract
+
+echo Building digitalfasteningRun
+docker build --no-cache -t digitalfastening/df-api-gateway:run .
+rm ./df-api-gateway-0.0.1-SNAPSHOT.jar</code></pre>
+                     </div>
+                  </div>
+               </section>
+               <section data-background-image="img/stage.jpeg">
+                  <h2>Multistage</h2>
+                  <div data-block-type="code" >
+                     <div class="sl-block-content notranslate fragment" data-highlight-theme="monokai" data-fragment-index="0">
+                        <pre ><code style="background-color: black !important; font-size: 20px;" data-trim data-noescape>
+ARG openjdkversion=8-jre-alpine
+FROM maven:3.6.0-jdk-11-slim as builder
+WORKDIR /root
+COPY settings.xml /root/.m2/
+COPY ./* ./
+RUN mvn -e -B  package
+
+
+FROM openjdk:$openjdkversion as df-api-gateway
+COPY --from=builder  /root/df-api-gateway/target/df-api-gateway-0.0.1-SNAPSHOT.jar /usr/src/apigateway/
+WORKDIR /usr/src/apigateway
+EXPOSE 8080
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=8080", "-jar", "df-api-gateway-0.0.1-SNAPSHOT.jar"]</code></pre>
+                     </div>
+                  </div>
+                  <div data-block-type="code" >
+                     <div class="sl-block-content notranslate fragment" data-highlight-theme="monokai" style="z-index: 13;" data-fragment-index="1">
+                        <pre ><code style="background-color: black !important; font-size: 24px;" data-trim data-noescape>COPY --from=nginx:latest /etc/nginx/nginx.conf /nginx.conf</code></pre>
+                     </div>
+                  </div>
+               </section>
+               <section data-background-image="img/stage.jpeg" style="width: 100% !important;height: 100% !important; margin-top: unset;top: 0px !important;position: fixed; max-height: unset;">
+                  <div data-block-type="code" >
+                     <div data-highlight-theme="monokai" >
+                        <pre ><code style="background-color: black !important; font-size: 20px; max-height: 700px !important;" data-trim data-noescape>ARG openjdkversion=8-jre-alpine
+FROM maven:3.6.0-jdk-11-slim as builder
+WORKDIR /root
+COPY settings.xml /root/.m2/
+COPY ./* ./
+RUN mvn -e -B  package
+
+FROM openjdk:$openjdkversion as df-api-gateway
+COPY --from=builder  /root/df-api-gateway/target/df-api-gateway-0.0.1-SNAPSHOT.jar /usr/src/apigateway/
+WORKDIR /usr/src/apigateway
+EXPOSE 8080
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=8080", "-jar", "df-api-gateway-0.0.1-SNAPSHOT.jar"]
+
+FROM openjdk:$openjdkversion as df-data-collector
+COPY --from=builder /root/df-data-collector/target/df-data-collector-0.0.1-SNAPSHOT.jar /usr/src/dfdatacollector/
+WORKDIR /usr/src/dfdatacollector
+EXPOSE 8210
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=8210", "-jar", "df-data-collector-0.0.1-SNAPSHOT.jar"]
+
+FROM openjdk:$openjdkversion as df-data-raw
+COPY --from=builder ./target/df-data-raw-0.0.1-SNAPSHOT.jar /usr/src/dfdataraw/
+WORKDIR /usr/src/dfdataraw
+EXPOSE 8240
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=8240", "-jar", "df-data-raw-0.0.1-SNAPSHOT.jar"]
+
+FROM openjdk:$openjdkversion as df-data-reporter
+COPY --from=builder /root/df-data-reporter/target/df-data-reporter-0.0.1-SNAPSHOT.jar /usr/src/dfdatareporter/
+WORKDIR /usr/src/dfdatareporter
+EXPOSE 8239
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=8239", "-jar", "df-data-reporter-0.0.1-SNAPSHOT.jar"]
+
+FROM openjdk:$openjdkversion as df-direct-reporting-system-service
+COPY --from=builder /root/df-direct-reporting-system-service/target/df-direct-reporting-system-service-0.0.1-SNAPSHOT.jar /usr/src/df-direct-reporting-system-service/
+WORKDIR /usr/src/uiserver
+EXPOSE 8241
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=8241", "-jar", "df-direct-reporting-system-service-0.0.1-SNAPSHOT.jar"]
+
+FROM openjdk:$openjdkversion as df-naming-service
+COPY --from=builder /root/df-naming-service/target/df-naming-service-0.0.1-SNAPSHOT.jar /usr/src/naming/
+WORKDIR /usr/src/naming
+EXPOSE 8761
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=8761", "-jar", "df-naming-service-0.0.1-SNAPSHOT.jar"]
+
+FROM openjdk:$openjdkversion as df-ui-launchpad
+COPY --from=builder /root/df-ui-launchpad/target/df-ui-launchpad-0.0.1-SNAPSHOT.jar /usr/src/uilaunchpad/
+WORKDIR /usr/src/uilaunchpad
+EXPOSE 80
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=80", "-jar", "df-ui-launchpadk-0.0.1-SNAPSHOT.jar"]
+
+
+FROM openjdk:$openjdkversion as df-ui-server
+COPY --from=builder /root/df-ui-server/target/df-ui-server-0.0.1-SNAPSHOT.jar /usr/src/uiserver/
+WORKDIR /usr/src/uiserver
+EXPOSE 80
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=80", "-jar", "df-ui-server-0.0.1-SNAPSHOT.jar"]
+
+
+</code></pre>
+
+                     </div>
+                  </div>
+                  <div class="fragment" data-block-type="code" >
+                     <div data-highlight-theme="monokai" >
+<pre ><code class="bash" style="background-color: black !important; font-size: 24px;" data-trim data-noescape>docker build --target=XXXXX .</code></pre>
+</div></div>
+               </section>
+              
+            </section>
+            <section data-background-image="img/Whale-Logo332@2x_5.png" data-background-size="initial" data-background-position="0% 0%" data-background-opacity="0.2">
+               <h3>Dive (<a href="https://github.com/wagoodman/dive" target="_blank">https://github.com/wagoodman/dive</a>)</h3>
+               <img style="border: 0px;max-height: 750px;" data-natural-width="1734" data-natural-height="1083" data-lazy-loaded="" data-src="img/demo.gif">
+            </section>
+            <section  data-background-image="img/Whale-Logo332@2x_5.png" data-background-size="initial" data-background-position="0% 0%" data-background-opacity="0.2">
+               <h1>New features 18.09</h1>
+               <ul style="text-align: left;width: 70%">
+                  <li class="fragment" data-fragment-index="0">
+                     <h2>BUILDKIT</h2>
+                  </li>
+                  <li class="fragment" data-fragment-index="1">
+                     <h2>mount</h2>
+                     <ul>
+                        <li class="visible">
+                           <h2>cache</h2>
+                        </li>
+                        <li class="visible">
+                           <h2>secret</h2>
+                        </li>
+                        <li class="visible">
+                           <h2>ssh forwarding</h2>
+                        </li>
+                     </ul>
+                  </li>
+               </ul>
+            </section>
+            <section data-background-image="img/Whale-Logo332@2x_5.png" data-background-size="initial" data-background-position="0% 0%" data-background-opacity="0.2" class="stack" >
+               <section >
+                  <h1>BUILDKIT</h1>
+                  <div class="sl-block-content fragment" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12; text-align: center;" data-fragment-index="0">
+                     <h3><span style="color:rgb(36, 41, 46); text-align:start">BuildKit is a toolkit for converting source code to build artifacts in an efficient, expressive and repeatable manner.</span></h3>
+                  </div>
+                  <div class="sl-block-content fragment" style="z-index: 13;" data-fragment-index="1"><img width="25%" style="border: 0px;" data-lazy-loaded="" data-src="img/giphy.webp"></div>
+                  <div class="fragment" data-fragment-index="2">
+                     <pre style="color:rgb(36, 41, 46);background-color: white; position: fixed;top:0px;height: 100%;width: 100%;z-index: 14" ><span style="font-size:1.5em;margin-top: unset;"><em class="wordwrap">
+
+Buildkit is a proposal to separate out docker build experience into a separate project, allowing different users to collaborate on the underlying technology and reuse and customize it in different ways.
+
+One of the main design goals of buildkit is to separate frontend and backend concerns during a build process. A frontend is something designed for the users to describe their build definition. Backend solves the problem of finding a most efficient way to solve a common low-level description of the build operations, that has been prepared for them by the frontends.
+
+The purpose of buildkit is not to be an arbitrary task runner. Instead, buildkit solves the problem of converting source code to an artifact in a self-contained, portable, reproducible, and most efficient way. Invoking builder should be traceable to immutable sources and invoking it shouldn't have any side-effects. Buildkit will support intelligent caching of artifacts of previous invocations so it can be efficiently used in a developer workflow.
+
+Buildkit is meant to be used as a long-running service. It is optimized for parallel execution of complex projects and building multiple projects at the same time.</em></span></pre>
+                  </div>
+               </section>
+               <section style="vertical-align: top !important;">
+                  <div  data-block-type="text" >
+                     <div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 15;">
+                        <h2>Benchmarks</h2>
+                     </div>
+                  </div>
+                  <div >
+                     <table >
+                        <tbody >
+                           <tr >
+                              <td >
+                                 <img style="border: 0px;" data-lazy-loaded="" data-src="img/bench1.jpeg">
+                              </td>
+                              <td style="vertical-align: -webkit-baseline-middle">
+                                 <p><strong><span style="color:#008000">7.2x</span></strong></p>
+                                 <p><strong><span style="color:#008000">faster</span></strong></p>
+                              </td>
+                           </tr>
+                           <tr >
+                              <td>
+                                 <img  style="border: 0px;" data-lazy-loaded="" data-src="img/bench2.jpeg">
+                              </td>
+                              <td style="vertical-align: -webkit-baseline-middle">
+                                 <p><strong><span style="color:#008000">2.5x</span></strong></p>
+                                 <p><strong><span style="color:#008000">faster</span></strong></p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </section>
+               <section >
+                  <h2>Enable Buildkit</h2>
+                  <table style="width: 80%">
+                     <tr>
+                        <td>
+                           <p><span style="font-size:1.0em"><span style="text-align:start">/etc/docker/daemon.json</span></span></p>
+                           <pre ><code class="json">{
+	"experimental" : true,
+	  "features" : {
+	    "buildkit" : true
+            }
+}</code></pre>
+                        </td>
+                        <td>
+                           <p>Environment</p>
+                           <pre class="bash"><code>export DOCKER_BUILDKIT=1</code></pre>
+                        </td>
+                     </tr>
+                  </table>
+               </section>
+               <section >
+                  <div class="asciicast" style="max-height: 80% !important;vertical-align: top !important;">
+                     <!--
+                        {
+                          "URL": "dockerExample/build.cast"
+                        } 
+                        -->
+                  </div>
+               </section>
+            </section>
+            <section data-background-image="img/Whale-Logo332@2x_5.png" data-background-size="initial" data-background-position="0% 0%" data-background-opacity="0.2" class="stck">
+               <section >
+                  <h1>Secret</h1>
+                  <!--<ul>
+                     <li class="fragment" data-fragment-index="0">
+                        <h2>Custom builder frontend</h2>
+                     </li>
+                     <li class="fragment" data-fragment-index="1">
+                        <h2>Mount(- - mount)</h2>
+                     </li>
+                  </ul>-->
+               </section>
+               <section >
+                  <h2>Secret example</h2>
+                  <pre  ><code style="background-color: black"># syntax=docker/dockerfile:experimental
+
+FROM alpine
+# install ssh client and git
+RUN apk add --no-cache openssh-client git
+# clone repo
+RUN --mount=type=secret,id=mysecretrepo,required /bin/sh /run/secrets/mysecretrepo</code></pre>
+                  <pre class="bash"><code style="background-color: black">docker build -f DockerfileSecret --secret id=mysecretrepo,src=script.sh .  </code></pre>
+               </section>
+               <section >
+                  <div class="asciicast" style="max-height: 80% !important;vertical-align: top !important;">
+                     <!--
+                        {
+                          "URL": "dockerExample/buildSecret.cast"
+                        } 
+                        -->
+                  </div>
+               </section>
+            </section>
+            <section data-background-image="img/Whale-Logo332@2x_5.png" data-background-size="initial" data-background-position="0% 0%" data-background-opacity="0.2" class="stack">
+               <h1>SSH forwarding</h1>
+               <pre class="fragment" data-fragment-index="0" ><code style="background-color: black"># syntax=docker/dockerfile:experimental
+FROM alpine
+# install ssh client and git
+RUN apk add --no-cache openssh-client git
+# download public key for github.com
+RUN mkdir -p -m 0600 ~/.ssh &amp;&amp; ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts
+# clone our private repository
+RUN --mount=type=ssh git clone git@github.com:myorg/myproject.git myproject</code></pre>
+               <pre class="bash fragment" data-fragment-index="1"><code>docker build --ssh default .</code></pre>
+               <div style="z-index: 14;" class="fragment" data-fragment-index="2"><img style="border: 0px;" data-natural-width="337" data-natural-height="337" data-lazy-loaded="" data-src="img/no.webp"></div>
+            </section>
+            <section data-background-image="img/Whale-Logo332@2x_5.png" data-background-size="initial" data-background-position="0% 0%" data-background-opacity="0.2" class="stack">
+            	<h1>- -  mount</h1>
+            	<pre class="fragment"  ><code style="background-color: black" data-trim data-noescape># syntax=docker/dockerfile:1.0-experimental
+ARG openjdkversion=8-jre-alpine
+FROM maven:3.6.0-jdk-11-slim as builder
+WORKDIR &#47;app
+COPY settings.xml &#47;root&#47;.m2&#47;
+<del style="color: red">COPY .&#47;* .&#47;</del>
+RUN <ins style="color: green">--mount=target=. --mount=type=cache,target=/root/.m2</ins> \<br>mvn -DoutputDirectory=/ -DbuildDirectory=/ -e  package
+
+FROM openjdk:$openjdkversion as df-data-reporter
+COPY --from=builder /app/df-data-reporter/target/df-data-reporter-0.0.1-SNAPSHOT.jar \<br>/usr/src/dfdatareporter/
+WORKDIR /usr/src/dfdatareporter
+EXPOSE 8239
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=8239", "-jar", "df-data-reporter-0.0.1-SNAPSHOT.jar"]</code></pre>
+
+            <pre class="fragment"><code style="background-color: black">docker build  --target=df-data-reporter .</code></pre>
+            </section>
+            
+            <section data-background-image="img/Whale-Logo332@2x_5.png" data-background-size="initial" data-background-position="0% 0%" data-background-opacity="0.2" class="stack">
+               <section>
+                  <h1>DockerApp</h1>
+               </section>
+               <section>
+                  <h2>Docker Application Packages</h2>
+                  <ol style="color:rgb(36, 41, 46)">
+                     <li class="fragment" data-fragment-index="0">You have several environments where you want to deploy the application, with small configuration differences</li>
+                     <li class="fragment" data-fragment-index="1">You have lots of similar applications</li>
+                  </ol>
+               </section>
+               <section >
+                  <h1 >Nginx</h1>
+                  <pre><code style="background-color: black">version: '3.6'
+services:
+  hello:
+    image: nginx:1.15.10
+    command: ["-text", "Ciao"]
+    ports:
+     - 80:80
+    networks:
+     - backend </code></pre>
+               </section>
+               <section >
+                  <h1>Nginx profiled</h1>
+                  <pre class="less"><code style="border-color: black">version: '3.6'
+services:
+  hello:
+    image: nginx:1.15.10
+    command: ["-text", "${text}"]
+    ports:
+     - ${port}:80
+    networks:
+     - backend </code></pre>
+               </section>
+               <section >
+                  <h1>DockerApp file</h1>
+                  <pre class="auto"><code style="background-color: black;">version: 0.1.0
+name: hello
+description: sample app for DockerCon 
+maintainers:
+  - name: paspaola
+    email: pasquale.paola@eng.it
+
+---
+version: '3.6'
+services:
+  hello:
+    image: nginx:1.15.10
+    command: ["-text", "${text}"]
+    ports:
+     - ${port}:80
+
+---
+port: 8080
+text: "hello DockerCon"
+</code></pre>
+<pre class="bash fragment"><code style="background-color: black;">docker-app render --set port=8181 --set text="Ciao"</code></pre>
+               </section>
+               <section >
+                
+                     <pre  data-highlight-theme="monokai"><code style="background-color: black;height: 750px;max-height: 750px;">version: 0.1.0
+
+name: digitalfastening
+
+description: Docker compose for digital fastening project
+
+namespace: azureeslnapoliregistry.azurecr.io
+
+maintainers:
+  - name: Pasquale Paola
+    email: pasquale.paola@eng.it
+
+---
+version: '3.7'
+services:
+
+  df-admin:
+    image: azureeslnapoliregistry.azurecr.io/df-admin
+    command: ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=7981", "-jar", "df-ui-admin-0.0.1-SNAPSHOT.jar"]
+    build:
+      context: df-ui-admin
+    ports:
+      - 7981:7981
+    networks:
+      - digital-fastnening
+
+  df-direct-reporting-system:
+    image: azureeslnapoliregistry.azurecr.io/df-direct-reporting-system-service
+    command: ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dspring.profiles.active=${spring.profile}", "-Dserver.port=8100","-Dserver.address=", "-jar", "df-direct-reporting-system-service-0.0.1-SNAPSHOT.jar"]
+    build:
+      context: df-direct-reporting-system-service
+    ports:
+      - 8241:8241
+    depends_on:
+      - df-naming-service
+      - df-api-gateway
+    networks:
+      - digital-fastnening
+
+  df-data-collector:
+    image: azureeslnapoliregistry.azurecr.io/df-data-collector
+    command: ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dspring.profiles.active=${spring.profile}", "-jar", "df-data-collector-0.0.1-SNAPSHOT.jar"]
+    build:
+      context: df-data-collector
+    depends_on:
+      - df-data-reporter
+      - redis
+      - df-naming-service
+      - df-api-gateway
+    networks:
+      - digital-fastnening
+
+  df-data-reporter:
+    image: azureeslnapoliregistry.azurecr.io/df-data-reporter
+    command: ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dspring.profiles.active=${spring.profile}", "-Dserver.port=8239", "-jar", "df-data-reporter-0.0.1-SNAPSHOT.jar"]
+    build:
+      context: df-data-reporter
+    ports:
+      - 8239:8239
+    depends_on:
+      - redis
+      - postgresql
+      - df-naming-service
+      - df-api-gateway
+    networks:
+      - digital-fastnening
+
+  df-data-raw:
+    image: azureeslnapoliregistry.azurecr.io/df-data-raw
+    command: ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dspring.profiles.active=${spring.profile}", "-Dserver.port=8240", "-jar", "df-data-raw-0.0.1-SNAPSHOT.jar"]
+    build:
+      context: df-data-raw
+    ports:
+      - 8240:8240
+    depends_on:
+      - mongodb
+      - redis
+      - df-naming-service
+      - df-api-gateway
+    networks:
+      - digital-fastnening
+
+  df-ui-server:
+    image: azureeslnapoliregistry.azurecr.io/df-ui-server
+    command: ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=80","-Dserver.address=", "-jar", "df-ui-server-0.0.1-SNAPSHOT.jar"]
+    build:
+      context: df-ui-server
+    depends_on:
+      - redis
+      - df-naming-service
+      - df-api-gateway
+      - df-ui-launchpad
+    ports:
+      - 8081:80
+    networks:
+      - digital-fastnening
+
+  df-ui-launchpad:
+    image: azureeslnapoliregistry.azurecr.io/df-ui-launchpad
+    command: ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=80", "-jar", "df-ui-launchpad-0.0.1-SNAPSHOT.jar"]
+    build:
+      context: df-ui-launchpad
+    depends_on:
+      - redis
+      - df-naming-service
+      - df-api-gateway
+    ports:
+      - 8082:80
+    networks:
+      - digital-fastnening
+
+  df-api-gateway:
+    image: azureeslnapoliregistry.azurecr.io/df-api-gateway
+    command: ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=8080", "-jar", "df-api-gateway-0.0.1-SNAPSHOT.jar"]
+    build:
+      context: df-api-gateway
+    ports:
+      - 8080:8080
+    depends_on:
+      - redis
+      - df-naming-service
+    networks:
+      - digital-fastnening
+
+  df-naming-service:
+    image: azureeslnapoliregistry.azurecr.io/df-naming-service
+    command: ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=8761", "-jar", "df-naming-service-0.0.1-SNAPSHOT.jar"]
+    build:
+      context: df-naming-service
+    ports:
+      - 8761:8761
+    networks:
+      - digital-fastnening
+
+  mongodb:
+    image: azureeslnapoliregistry.azurecr.io/mongodb
+    build:
+      context: docker-additional-services/mongodb
+    ports:
+    - 27017:27017
+    networks:
+    - digital-fastnening
+
+  redis:
+    image: redis:5.0.3-alpine
+    ports:
+      - 6379:6379
+    networks:
+      - digital-fastnening
+
+  postgresql:
+    image: azureeslnapoliregistry.azurecr.io/postgresql
+    build:
+      context: docker-additional-services/postgresql
+    ports:
+      - 5432:5432
+    networks:
+    - digital-fastnening
+
+
+networks:
+  digital-fastnening:
+
+---
+{
+    spring.profile: development
+}
+</code></pre>
+              <pre class="fragment"  data-highlight-theme="monokai"><code style="background-color: black;">docker-app render | docker-compose -f - up --build
+              </code></pre>
+               </section>
+            </section>
+            <section data-background-image="img/Whale-Logo332@2x_5.png" data-background-size="initial" data-background-position="0% 0%" data-background-opacity="0.2">
+            	<section>
+               		<h1>Cnab.io</h1>
+               		<h2 class="fragment">Cloud Native Application Bundles (<b>CNAB</b>) are a package format specification that describes a technology for bundling, installing, and managing distributed applications, that are by design, <b>cloud agnostic</b>.</h2>
+               	</section>
+               	<section>
+               		<h2>Cnab.io</h2>
+               		<ul>
+               			<li>It is not a platform-specific tool</li>
+               			<li>It uses containers for encapsulating installation logic</li>
+               			<li>It can bundle applications targeting environments:</li>
+               			<ul>
+               				<li>IaaS (like OpenStack or Azure)</li>
+               				<li>Container orchestrators (like Kubernetes or Nomad)</li>
+               				<li>Container runtimes (like local Docker or ACI)</li>
+               				<li>Cloud platform services (like object storage or Database as a Service)</li>
+               			</ul>
+               		</ul>
+               	</section>
+               	<section>
+               		<h2>bundle.json</h2>
+               		<ul>
+	               		<li>Information about the bundle, such as name, bundle version, description, and keywords</li>
+						<li>Information about locating and running the invocation image (the installer program)</li>
+						<li>A list of user-overridable parameters that this package recognizes</li>
+						<li>The list of executable images that this bundle will install</li>
+						<li>A list of credential paths or environment variables that this bundle requires to execute</li>
+					</ul>
+
+               	</section>
+               	<section>
+               		<h2>bundle.json</h2>
+               		<pre class="fragment json"  data-highlight-theme="monokai"><code style="background-color: black;height: 750px;max-height: 750px;">{
+	"name": "azureeslnapoliregistry.azurecr.io/digitalfastening",
+	"version": "0.1.0",
+	"description": "Docker compose for digital fastening project",
+	"maintainers": [
+		{
+			"name": "Pasquale Paola",
+			"email": "pasquale.paola@eng.it",
+			"url": ""
+		}
+	],
+	"invocationImages": [
+		{
+			"imageType": "docker",
+			"image": "azureeslnapoliregistry.azurecr.io/digitalfastening:0.1.0-invoc"
+		}
+	],
+	"images": null,
+	"actions": {
+		"inspect": {
+			"Modifies": false
+		}
+	},
+	"parameters": {
+		"docker.kubernetes-namespace": {
+			"type": "string",
+			"defaultValue": "",
+			"required": false,
+			"metadata": {
+				"description": "Namespace in which to deploy"
+			},
+			"destination": {
+				"path": "",
+				"env": "DOCKER_KUBERNETES_NAMESPACE"
+			}
+		},
+		"docker.orchestrator": {
+			"type": "string",
+			"defaultValue": "",
+			"allowedValues": [
+				"",
+				"swarm",
+				"kubernetes"
+			],
+			"required": false,
+			"metadata": {
+				"description": "Orchestrator on which to deploy"
+			},
+			"destination": {
+				"path": "",
+				"env": "DOCKER_STACK_ORCHESTRATOR"
+			}
+		},
+		"spring.profile": {
+			"type": "string",
+			"defaultValue": "development",
+			"required": false,
+			"metadata": {},
+			"destination": {
+				"path": "",
+				"env": "docker_param1"
+			}
+		}
+	},
+	"credentials": {
+		"docker.context": {
+			"path": "/cnab/app/context.dockercontext",
+			"env": ""
+		}
+	}
+}
+               		</code></pre>
+               	</section>
+               	<section >
+               		<h2>CNAB structure</h2> 
+               		<div data-markdown >
+               		<textarea  data-template>
+```yaml
+cnab/                  # REQUIRED top-level directory
+└── build/
+    │   └──Dockerfile​  # OPTIONAL
+└── app​                # REQUIRED
+    ├── run​            # REQUIRED: This is the main entrypoint, and MUST be executable
+    ├── charts​         # Example: Helm charts might go here
+    │   └── azure-voting-app​
+    │       ├── Chart.yaml​
+    │       ├── templates​​
+    │       │   └── ...
+    │       └── values.yaml​
+    └── sfmesh​         # Example: Service Fabric definitions might go here
+        └── sfmesh-deploy.json
+```
+               		</textarea>
+               	</div>
+               	</section>
+               	<section>
+               		<h2>/cnab/app/run</h2>
+               	<pre class="fragment bash"  data-highlight-theme="monokai"><code style="background-color: black;min-height: 600px;">#!/bin/sh
+
+action=$CNAB_ACTION
+name=$CNAB_INSTALLATION_NAME 
+
+case $action in
+    install)
+    echo "Install action"
+    ;;
+    uninstall)
+    echo "uninstall action"
+    ;;
+    upgrade)
+    echo "Upgrade action"
+    ;;
+    *)
+    echo "No action for $action"
+    ;;
+esac
+echo "Action $action complete for $name"
+               	</code></pre>	
+               	</section>
+               	<section >
+               		<h2>Dive on CNAB image</h2>
+               		<img src="img/diveCNAB.jpeg" style="border: 0px;">
+               		
+               	</section>
+               	<section>
+               		<h2>CNAB tools</h2>	
+               		<ul>
+               			<li>duffle <img src="img/duffle-logo-wordmark.svg" style="border: 0px;"></li>
+               			<li>duffle-bag <img src="img/baag.png" style="border: 0px; height: 100px;"></li>
+               			<li>porter <img src="img/porter.png" style="border: 0px; height: 100px;"></li>
+               		</ul>
+               	
+               	</section>
+               	
+            </section>  
+            <section >                  
+                  <div data-block-type="text" >
+                     <div data-placeholder-text="Text" >
+                        <img style="border: 0px;" data-src="img/dockercon.png">
+                     </div>
+
+                  </div>
+               </section>        
+         </div>
+      </div>
+      <script src="lib/js/head.min.js"></script>
+      <script src="js/reveal.js"></script>
+      <script>
+         // More info about config & dependencies:
+         // - https://github.com/hakimel/reveal.js#configuration
+         // - https://github.com/hakimel/reveal.js#dependencies
+         Reveal.initialize({
+         	width: "100%",
+         	height: "100%",
+         
+         	// Factor of the display size that should remain empty around the content
+         	margin: 0.1,
+         
+         	// Bounds for smallest/largest possible scale to apply to content
+         	minScale: 0.2,
+         	maxScale: 1.5,
+         	history: true,
+         	anything: [
+                  {className: "asciicast",
+                           defaults: { theme: 'monokai', fontSize: '14px' },
+                           initialize: (function(container, options) {
+                                     asciinema.player.js.CreatePlayer(container, options.URL, options);
+                            })
+                   },
+                   ],
+         	dependencies: [
+         		{ src: 'plugin/markdown/marked.js' },
+         		{ src: 'plugin/markdown/markdown.js' },
+         		{ src: 'plugin/anything/anything.js' },
+         		{ src: 'plugin/asciinema/asciinema-player.js' },
+         		{ src: 'plugin/notes/notes.js', async: true },
+         		{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+         	]
+         });
+      </script>
+   </body>
+</html>

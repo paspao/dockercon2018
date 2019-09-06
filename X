@@ -1,0 +1,29 @@
+X
+urandom
+copy-on-write
+containerd runc
+entropy dev random
+https://www.2uo.de/myths-about-urandom/
+jdk 11 
+jdk 8 -XX:+UnlockExperimentalVMOptions \
+  -XX:+UseCGroupMemoryLimitForHeap
+
+https://www.2uo.de/myths-about-urandom/
+
+entropia di una sorgente di messaggi è l'informazione media contenuta in ogni messaggio emesso
+
+l’entropia misura il grado di casualità di un sistema, in un file ad esempio l’entropia misura quanto sono disordinati i byte che lo compongono
+
+in un binario dividendolo per segmenti possimo inviduare dove c'è più codice (sezione a maggiore entropia)
+
+in informatica per specificare la forza di una password si usa l’entropia. 
+
+
+cnab
+
+namespace cgroups
+
+mount
+
+
+https://mashtips.com/airplay-mac-screen-to-windows-computer/

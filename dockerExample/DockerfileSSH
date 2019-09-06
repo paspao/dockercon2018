@@ -1,0 +1,8 @@
+# syntax=docker/dockerfile:experimental
+FROM alpine
+# install ssh client and git
+RUN apk add --no-cache openssh-client git
+# clone our private repositorssh
+
+RUN --mount=type=ssh git clone production.eng.it/gitlab/FCA_OP_PILOTS/digital-fastening.git 
+
